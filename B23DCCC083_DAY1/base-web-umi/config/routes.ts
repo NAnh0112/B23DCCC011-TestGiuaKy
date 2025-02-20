@@ -43,6 +43,13 @@
 		icon: 'ArrowsAltOutlined',
 	},
 	  
+	{
+		path: '/manage-subject',
+		name: 'Subject Management',
+		component: '@/pages/Subject Management',
+		icon: 'ArrowsAltOutlined',
+	},
+	  
 
 	// DANH MUC HE THONG
 	// {
