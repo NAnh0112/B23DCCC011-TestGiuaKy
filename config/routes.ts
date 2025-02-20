@@ -36,6 +36,18 @@
 		component: './RandomUser',
 		icon: 'ArrowsAltOutlined',
 	},
+	{
+		path: '/manage-subject',
+		name: 'Subject Management',
+		component: '@/pages/Subject Management',
+		icon: 'ArrowsAltOutlined',
+	},
+	{
+		path: '/game', // Đường dẫn trên URL
+		name: 'Game', // Tên hiển thị trên thanh menu
+		component: './Game', // base-web-umi/pages/Game/index.tsx	 
+		icon: 'SmileOutlined', // Icon
+	},
 
 	// DANH MUC HE THONG
 	// {
