@@ -49,7 +49,35 @@
 		component: '@/pages/Subject Management',
 		icon: 'ArrowsAltOutlined',
 	},
-	  
+
+	{
+		path: '/manage-question',
+		name: 'Question Management',
+		icon: 'ArrowsAltOutlined',
+		routes: [
+			{
+				path: '/manage-question/knowledge',
+				name: 'Quản lý khối kiến thức',
+				component: '@/pages/Question Management/Knowledge'
+			},
+			{
+				path: '/manage-question/subjects',
+				name: 'Quản lý môn học',
+				component: '@/pages/Question Management/Subject'
+			},
+			{
+				path: '/manage-question/questions',
+				name: 'Quản lý câu hỏi',
+				component: '@/pages/Question Management/Question'
+			},
+			{
+				path: '/manage-question/exams',
+				name: 'Quản lý đề thi',
+				component: '@/pages/Question Management/Exam'
+			}
+		]
+	},
+	
 
 	// DANH MUC HE THONG
 	// {
