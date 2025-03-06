@@ -1,13 +1,15 @@
-/* General styles */
+
 .game2-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
 }
 
 .game2-title {
@@ -15,7 +17,8 @@
   color: #2c3e50;
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .keyboard-instructions {
@@ -42,7 +45,7 @@ kbd {
   margin: 0 2px;
 }
 
-/* Game layout */
+
 .game-layout {
   display: flex;
   flex-direction: column;
@@ -91,42 +94,81 @@ kbd {
   }
 }
 
-/* Player choice buttons */
+
 .game2-button {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
+  position: relative;
+  z-index: 1;
 }
 
 .choice-button {
-  background-color: #f8f9fa;
-  border: 2px solid #dee2e6;
-  border-radius: 8px;
-  padding: 12px 20px;
+  background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 15px 25px;
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  min-height: 60px;
+}
+
+.choice-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 12px 12px;
+}
+
+.choice-button[value="rock"] {
+  background: linear-gradient(to bottom, #ffd166 0%, #f7c331 100%);
+  color: #474747;
+}
+
+.choice-button[value="paper"] {
+  background: linear-gradient(to bottom, #06d6a0 0%, #05b887 100%);
+  color: #fff;
+}
+
+.choice-button[value="scissors"] {
+  background: linear-gradient(to bottom, #ef476f 0%, #e63e65 100%);
+  color: #fff;
 }
 
 .choice-button:hover {
-  background-color: #e9ecef;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.choice-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .choice-button:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .key-pressed {
-  background-color: #d1ecf1;
+  background: #d1ecf1 !important;
   border-color: #bee5eb;
-  transform: scale(0.98);
+  transform: scale(0.98) !important;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1) !important;
 }
 
 .key-hint {
@@ -137,29 +179,36 @@ kbd {
   justify-content: center;
   width: 24px;
   height: 24px;
-  background-color: #6c757d;
+  background-color: rgba(0, 0, 0, 0.2);
   color: white;
   border-radius: 50%;
   font-size: 0.8rem;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Computer choice display */
+
 .computer-choice-box {
-  background-color: #f8f9fa;
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   text-align: center;
-  border: 2px solid #dee2e6;
+  border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 1;
 }
 
 .computer-choice-title {
   font-weight: bold;
   margin-bottom: 15px;
   color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
 }
 
 .computer-choice-display {
@@ -188,7 +237,7 @@ kbd {
   color: #495057;
 }
 
-/* Result display */
+
 .result {
   margin-top: 2rem;
   padding: 1rem;
@@ -231,7 +280,7 @@ kbd {
   color: #856404;
 }
 
-/* History section */
+
 .history-section {
   background-color: white;
   padding: 1.5rem;
