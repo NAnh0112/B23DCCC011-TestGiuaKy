@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Button, message } from 'antd';
 import { ExclamationCircleOutlined, ReloadOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import styles from './Game.module.css';
+import styles from './guessNumber.css';
 
 const Game: React.FC = () => {
   const [randomNumber, setRandomNumber] = useState<number>(0);

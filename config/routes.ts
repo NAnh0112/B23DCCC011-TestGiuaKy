@@ -76,6 +76,12 @@
 			}
 		]
 	},
+	{
+		path:'/rockpaperscissors',
+		name: 'RockPaperScissors',
+        component: './RockPaperScissors/RockPaperScissors',
+		icon: 'CheckSquareOutlined',
+	},
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
