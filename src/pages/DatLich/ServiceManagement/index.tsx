@@ -10,18 +10,20 @@ import {
   Input, 
   InputNumber, 
   message, 
-  Image, 
   Typography,
-  Popconfirm 
+  Popconfirm,
+  Rate,
+  Tooltip 
 } from 'antd';
 import { 
   PlusOutlined, 
   EditOutlined, 
   DeleteOutlined, 
   ClockCircleOutlined,
-  DollarOutlined 
+  DollarOutlined,
+  StarOutlined
 } from '@ant-design/icons';
-import { useModel } from 'umi';
+import { useModel, history } from 'umi';
 
 const { TextArea } = Input;
 const { Title } = Typography;
@@ -29,6 +31,7 @@ const { Title } = Typography;
 const ServiceManagement: React.FC = () => {
   const [form] = Form.useForm();
   const { services, addService, updateService, deleteService } = useModel('datlich.service');
+  const { getServiceAverageRating, getServiceReviews } = useModel('datlich.review');
   
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingService, setEditingService] = useState<DatLich.Service | null>(null);
@@ -41,7 +44,6 @@ const ServiceManagement: React.FC = () => {
         price: record.price,
         durationMinutes: record.durationMinutes,
         description: record.description,
-        image: record.image
       });
     } else {
       form.resetFields();
@@ -73,17 +75,28 @@ const ServiceManagement: React.FC = () => {
 
   const columns = [
     {
-      title: 'Hình ảnh',
-      dataIndex: 'image',
-      key: 'image',
-      render: (image?: string) => (
-        image ? <Image src={image} width={80} height={80} style={{ objectFit: 'cover' }} /> : null
-      )
-    },
-    {
       title: 'Tên dịch vụ',
       dataIndex: 'name',
       key: 'name',
+    },
+    {
+      title: 'Đánh giá',
+      key: 'rating',
+      render: (_, record: DatLich.Service) => {
+        const rating = getServiceAverageRating(record.id);
+        const reviewCount = getServiceReviews(record.id).length;
+        
+        return rating > 0 ? (
+          <Tooltip title={`${reviewCount} đánh giá`}>
+            <Space>
+              <Rate disabled allowHalf value={rating} style={{ fontSize: 14 }} />
+              <span>({rating.toFixed(1)})</span>
+            </Space>
+          </Tooltip>
+        ) : (
+          <span>Chưa có đánh giá</span>
+        );
+      },
     },
     {
       title: 'Giá (VNĐ)',
@@ -138,6 +151,21 @@ const ServiceManagement: React.FC = () => {
 
   return (
     <PageContainer title="Quản lý dịch vụ">
+      <Card 
+        title="Đánh giá dịch vụ" 
+        style={{ marginBottom: 16 }} 
+        extra={
+          <Button 
+            icon={<StarOutlined />} 
+            onClick={() => history.push('/datlich/staff-reviews?tab=service')}
+          >
+            Xem phân tích đánh giá
+          </Button>
+        }
+      >
+        <p>Xem chi tiết đánh giá từ khách hàng về các dịch vụ</p>
+      </Card>
+      
       <Card>
         <Button 
           type="primary" 
@@ -203,13 +231,6 @@ const ServiceManagement: React.FC = () => {
               style={{ width: '100%' }} 
               prefix={<ClockCircleOutlined />}
             />
-          </Form.Item>
-          
-          <Form.Item
-            name="image"
-            label="URL Hình ảnh (tùy chọn)"
-          >
-            <Input />
           </Form.Item>
           
           <Form.Item

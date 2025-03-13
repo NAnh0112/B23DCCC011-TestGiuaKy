@@ -85,6 +85,12 @@ export function generateAvailableTimeSlots(
   appointments: DatLich.Appointment[], 
   serviceDuration: number
 ): {startTime: string, endTime: string}[] {
+  // Check if staff has reached max clients per day
+  const currentAppointments = countStaffAppointmentsForDay(staff.id, date, appointments);
+  if (currentAppointments >= staff.maxClientsPerDay) {
+    return []; // No more slots available if max clients reached
+  }
+  
   const workingHours = getStaffWorkingHours(staff, date);
   if (!workingHours) return [];
   

@@ -38,4 +38,19 @@ declare namespace DatLich {
     notes?: string;
     createdAt: string; // Thời gian tạo lịch hẹn
   }
+
+  export interface Review {
+    id: string;
+    appointmentId: string;
+    staffId: string;
+    serviceId: string;
+    clientName: string;
+    rating: number; // 1-5 stars
+    comment: string;
+    createdAt: string; // ISO string
+    staffResponse?: {
+      response: string;
+      respondedAt: string; // ISO string
+    };
+  }
 }
