@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Button, Table, Space, Modal, Form, Input, InputNumber, Select, message, Avatar } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, UserOutlined } from '@ant-design/icons';
+import { Card, Button, Table, Space, Modal, Form, Input, InputNumber, Select, message, Rate, Tooltip } from 'antd';
+import { PlusOutlined, EditOutlined, DeleteOutlined, StarOutlined } from '@ant-design/icons';
 import { useModel } from 'umi';
 import WeekScheduler from '@/components/DatLich/WeekScheduler';
 
@@ -11,6 +11,7 @@ const StaffManagement: React.FC = () => {
   const [form] = Form.useForm();
   const { staff, addStaff, updateStaff, deleteStaff } = useModel('datlich.staff');
   const { services } = useModel('datlich.service');
+  const { getStaffAverageRating, getStaffReviews } = useModel('datlich.review');
   
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingStaff, setEditingStaff] = useState<DatLich.Staff | null>(null);
@@ -23,7 +24,6 @@ const StaffManagement: React.FC = () => {
         maxClientsPerDay: record.maxClientsPerDay,
         serviceIds: record.serviceIds,
         workSchedule: record.workSchedule,
-        avatar: record.avatar,
       });
     } else {
       form.resetFields();
@@ -55,21 +55,28 @@ const StaffManagement: React.FC = () => {
 
   const columns = [
     {
-      title: 'Ảnh đại diện',
-      dataIndex: 'avatar',
-      key: 'avatar',
-      render: (avatar: string) => (
-        <Avatar 
-          src={avatar} 
-          icon={<UserOutlined />} 
-          size="large"
-        />
-      ),
-    },
-    {
       title: 'Tên nhân viên',
       dataIndex: 'name',
       key: 'name',
+    },
+    {
+      title: 'Đánh giá',
+      key: 'rating',
+      render: (_, record: DatLich.Staff) => {
+        const rating = getStaffAverageRating(record.id);
+        const reviewCount = getStaffReviews(record.id).length;
+        
+        return rating > 0 ? (
+          <Tooltip title={`${reviewCount} đánh giá`}>
+            <Space>
+              <Rate disabled allowHalf value={rating} style={{ fontSize: 14 }} />
+              <span>({rating.toFixed(1)})</span>
+            </Space>
+          </Tooltip>
+        ) : (
+          <span>Chưa có đánh giá</span>
+        );
+      },
     },
     {
       title: 'Số khách tối đa/ngày',
@@ -116,6 +123,21 @@ const StaffManagement: React.FC = () => {
 
   return (
     <PageContainer title="Quản lý nhân viên">
+      <Card 
+        title="Đánh giá nhân viên" 
+        style={{ marginBottom: 16 }} 
+        extra={
+          <Button 
+            icon={<StarOutlined />} 
+            onClick={() => history.push('/datlich/staff-reviews')}
+          >
+            Quản lý đánh giá
+          </Button>
+        }
+      >
+        <p>Xem chi tiết đánh giá của khách hàng và phản hồi</p>
+      </Card>
+      
       <Card>
         <Button 
           type="primary" 
@@ -150,13 +172,6 @@ const StaffManagement: React.FC = () => {
             name="name"
             label="Tên nhân viên"
             rules={[{ required: true, message: 'Vui lòng nhập tên nhân viên!' }]}
-          >
-            <Input />
-          </Form.Item>
-          
-          <Form.Item
-            name="avatar"
-            label="URL Ảnh đại diện (tùy chọn)"
           >
             <Input />
           </Form.Item>

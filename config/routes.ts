@@ -78,7 +78,7 @@
 	},
 	{
 		path: '/datlich',
-		name: 'datlich',
+		name: 'Đặt lịch',
 		icon: 'CalendarOutlined',
 		routes: [
 			{
@@ -100,6 +100,27 @@
 				name: 'Quản lý dịch vụ',
 				component: './DatLich/ServiceManagement',
 			},
+			{
+				path: '/datlich/book',
+				name: 'Đặt lịch hẹn',
+				component: './DatLich/BookAppointment',
+			},
+			{
+				path: '/datlich/manage',
+				name: 'Quản lý lịch hẹn',
+				component: './DatLich/ManageAppointments',
+				},
+				// Add new routes for review features
+				{
+					path: '/datlich/reviews',
+					component: './DatLich/CustomerReviews',
+					name: 'Đánh giá dịch vụ',
+				},
+				{
+					path: '/datlich/staff-reviews',
+					component: './DatLich/StaffReviews',
+					name: 'Thống kê đánh giá',
+				},
 		],
 	},
 	{
