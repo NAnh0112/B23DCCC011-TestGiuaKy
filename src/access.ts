@@ -60,5 +60,8 @@ export default function access(initialState: IInitialState) {
 		//     : (route: any) => {
 		//         return handlePhanNhom(initialState, route?.maChucNang) || false;
 		//       },
+		
+		// Quyền truy cập module đặt lịch
+		canAccessBooking: true, // Hoặc logic kiểm tra quyền truy cập khác
 	};
 }

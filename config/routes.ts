@@ -77,6 +77,32 @@
 		]
 	},
 	{
+		path: '/datlich',
+		name: 'datlich',
+		icon: 'CalendarOutlined',
+		routes: [
+			{
+				path: '/datlich',
+				redirect: '/datlich/dashboard',
+			},
+			{
+				path: '/datlich/dashboard',
+				name: 'Trang chủ',
+				component: './DatLich/index',
+			},
+			{
+				path: '/datlich/staff',
+				name: 'Quản lý nhân viên',
+				component: './DatLich/StaffManagement',
+			},
+			{
+				path: '/datlich/service',
+				name: 'Quản lý dịch vụ',
+				component: './DatLich/ServiceManagement',
+			},
+		],
+	},
+	{
 		path:'/rockpaperscissors',
 		name: 'RockPaperScissors',
         component: './RockPaperScissors/RockPaperScissors',
@@ -118,6 +144,7 @@
 		layout: false,
 		hideInMenu: true,
 	},
+	
 	{
 		path: '/',
 	},
