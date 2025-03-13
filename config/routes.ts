@@ -121,6 +121,11 @@
 					component: './DatLich/StaffReviews',
 					name: 'Thống kê đánh giá',
 				},
+				{
+					path: '/datlich/reports',
+					component: './DatLich/Reporting',
+					name: 'Thống kê & Báo cáo',
+				},
 		],
 	},
 	{
