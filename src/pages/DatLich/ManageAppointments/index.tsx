@@ -33,14 +33,14 @@ const ManageAppointments: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   
-  // Filter appointments based on selected filters
+  // Lọc dữ liệu lịch hẹn
   const filteredAppointments = appointments.filter(app => {
-    // Filter by status
+    // Lọc theo trạng thái
     if (filteredStatus && app.status !== filteredStatus) {
       return false;
     }
     
-    // Filter by date range
+    // Lọc theo ngày
     if (dateRange && dateRange[0] && dateRange[1]) {
       const appDate = moment(app.date);
       return appDate.isBetween(dateRange[0], dateRange[1], null, '[]');
@@ -49,7 +49,7 @@ const ManageAppointments: React.FC = () => {
     return true;
   });
   
-  // Update appointment status
+  // Update trạng thái lịch hẹn
   const handleStatusChange = (status: string) => {
     if (!selectedAppointment) return;
     
@@ -58,7 +58,7 @@ const ManageAppointments: React.FC = () => {
     setStatusModalVisible(false);
   };
   
-  // Delete appointment
+  // Xóa
   const handleDeleteAppointment = () => {
     if (!selectedAppointment) return;
     
@@ -67,7 +67,7 @@ const ManageAppointments: React.FC = () => {
     setStatusModalVisible(false);
   };
   
-  // Get staff and service name from their IDs
+  // Lấy tên nhân viên và dịch vụ
   const getStaffName = (staffId: string) => {
     const foundStaff = staff.find(s => s.id === staffId);
     return foundStaff ? foundStaff.name : 'Unknown';

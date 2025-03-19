@@ -10,7 +10,7 @@ const { TextArea } = Input;
 interface ReviewListProps {
   reviews: DatLich.Review[];
   showResponse?: boolean;
-  isStaff?: boolean; // Indicates if the current user is staff
+  isStaff?: boolean; 
   onAddResponse?: (reviewId: string, responseText: string) => void;
 }
 
@@ -23,7 +23,6 @@ const ReviewList: React.FC<ReviewListProps> = ({
   const { services } = useModel('datlich.service');
   const { staff } = useModel('datlich.staff');
   
-  // State to track which review is being responded to
   const [activeResponseId, setActiveResponseId] = useState<string | null>(null);
   const [responseText, setResponseText] = useState<string>('');
   
