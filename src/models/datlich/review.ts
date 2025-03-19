@@ -52,7 +52,7 @@ export default function useReviewModel() {
     saveReviews(updatedReviews);
   }, [reviews, saveReviews]);
 
-  // Get average rating for a staff member
+  // Get % TB nhân viên
   const getStaffAverageRating = useCallback((staffId: string) => {
     const staffReviews = reviews.filter(review => review.staffId === staffId);
     if (staffReviews.length === 0) return 0;
@@ -61,7 +61,7 @@ export default function useReviewModel() {
     return sum / staffReviews.length;
   }, [reviews]);
 
-  // Get average rating for a service
+  // Get % TB dịch vụ
   const getServiceAverageRating = useCallback((serviceId: string) => {
     const serviceReviews = reviews.filter(review => review.serviceId === serviceId);
     if (serviceReviews.length === 0) return 0;
@@ -70,17 +70,17 @@ export default function useReviewModel() {
     return sum / serviceReviews.length;
   }, [reviews]);
 
-  // Check if an appointment has been reviewed
+  // xem xem đã đánh giá chưa
   const hasBeenReviewed = useCallback((appointmentId: string) => {
     return reviews.some(review => review.appointmentId === appointmentId);
   }, [reviews]);
 
-  // Get reviews for a specific staff member
+  // lấy đánh giá của nhân viên
   const getStaffReviews = useCallback((staffId: string) => {
     return reviews.filter(review => review.staffId === staffId);
   }, [reviews]);
 
-  // Get reviews for a specific service
+  // Lấy đánh giá của dịch vụ
   const getServiceReviews = useCallback((serviceId: string) => {
     return reviews.filter(review => review.serviceId === serviceId);
   }, [reviews]);

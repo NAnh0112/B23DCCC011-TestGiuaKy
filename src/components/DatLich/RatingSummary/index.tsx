@@ -21,7 +21,7 @@ const RatingSummary: React.FC<RatingSummaryProps> = ({
   totalReviews,
   ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
 }) => {
-  // Calculate percentages if we have rating counts
+  // tính phần trăm đánh giá
   const getPercentage = (count: number) => {
     if (totalReviews === 0) return 0;
     return Math.round((count / totalReviews) * 100);

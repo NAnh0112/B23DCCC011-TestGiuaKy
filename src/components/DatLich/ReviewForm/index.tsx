@@ -19,7 +19,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ appointment, onComplete }) => {
   const handleSubmit = (values: any) => {
     const { rating, comment } = values;
     
-    // Create review
+    // tạo review
     addReview({
       appointmentId: appointment.id,
       staffId: appointment.staffId,
@@ -33,7 +33,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ appointment, onComplete }) => {
     onComplete();
   };
   
-  // Check if the appointment has already been reviewed
+  // kiểm tra xem lịch hẹn đã được đánh giá chưa
   if (hasBeenReviewed(appointment.id)) {
     return (
       <Card>
@@ -43,7 +43,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ appointment, onComplete }) => {
     );
   }
 
-  // Find service and staff details
+  // tìm dịch vụ và nhân viên tương ứng
   const service = services.find(s => s.id === appointment.serviceId);
   const staffMember = staff.find(s => s.id === appointment.staffId);
 

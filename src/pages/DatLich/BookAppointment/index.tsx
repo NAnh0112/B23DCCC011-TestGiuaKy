@@ -27,30 +27,30 @@ const BookAppointment: React.FC = () => {
   const [availableTimeSlots, setAvailableTimeSlots] = useState<{startTime: string, endTime: string}[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('');
   
-  // Filter available staff based on the selected date and service
+  // lọc nhân viên dựa theo ngày và dịch vụ đã chọn
   const availableStaff = staff.filter(s => {
     if (!selectedDate || !selectedService) return false;
     
-    // Check if staff works on this day
+    // kiểm tra xem nhân viên có làm việc vào ngày đã chọn không
     const isWorking = isStaffWorkingOnDate(s, selectedDate);
     
-    // Check if staff provides this service
+    // kiểm tra xem nhân viên có cung cấp dịch vụ đã chọn không
     const providesService = s.serviceIds.includes(selectedService.id);
     
     return isWorking && providesService;
   });
 
-  // Update available staff when date or service changes
+  // update nếu có thay đổi ngày hoặc dịch vụ
   useEffect(() => {
     if (selectedDate && selectedService) {
-      // Reset staff selection when date or service changes
+      // Reset
       setSelectedStaff(null);
       form.setFieldsValue({ staffId: undefined, timeSlot: undefined });
       setAvailableTimeSlots([]);
     }
   }, [selectedDate, selectedService]);
 
-  // Update available time slots when staff, date or service changes
+  // Update nếu có thay đổi nhân viên, ngày hoặc dịch vụ
   useEffect(() => {
     if (selectedStaff && selectedDate && selectedService) {
       const slots = generateAvailableTimeSlots(
@@ -60,7 +60,7 @@ const BookAppointment: React.FC = () => {
         selectedService.durationMinutes
       );
       setAvailableTimeSlots(slots);
-      // Reset time selection
+      // Reset
       form.setFieldsValue({ timeSlot: undefined });
     } else {
       setAvailableTimeSlots([]);
@@ -83,10 +83,10 @@ const BookAppointment: React.FC = () => {
       return;
     }
 
-    // Extract start and end time from the selected time slot
+    
     const [startTime, endTime] = values.timeSlot.split(' - ');
     
-    // Create appointment
+    // Tạo lịch hẹn mới
     const newAppointment: Partial<DatLich.Appointment> = {
       id: `appointment-${Date.now()}`,
       clientName: values.name,

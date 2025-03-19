@@ -17,13 +17,13 @@ const CustomerReviews: React.FC = () => {
   
   const [selectedAppointment, setSelectedAppointment] = useState<DatLich.Appointment | null>(null);
   
-  // Filter only completed appointments
+  // Lọc lịch hẹn đã hoàn thành
   const completedAppointments = appointments.filter(app => app.status === 'completed');
   
-  // Customer's reviews
+  // Nhận xét của khách hàng
   const customerReviews = reviews;
   
-  // Display service and staff names
+  // Hiện tên dịch vụ và nhân viên
   const getServiceName = (serviceId: string) => {
     return services.find(s => s.id === serviceId)?.name || 'Dịch vụ không xác định';
   };

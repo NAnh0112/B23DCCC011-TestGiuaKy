@@ -25,12 +25,11 @@ const StaffReviews: React.FC = () => {
   const [selectedStaffId, setSelectedStaffId] = useState<string>('');
   const [selectedServiceId, setSelectedServiceId] = useState<string>('');
   
-  // State for response modal
   const [responseModalVisible, setResponseModalVisible] = useState(false);
   const [currentReviewId, setCurrentReviewId] = useState<string>('');
   const [responseText, setResponseText] = useState('');
   
-  // Filter reviews by staff or service
+
   const staffReviews = useMemo(() => 
     selectedStaffId ? getStaffReviews(selectedStaffId) : [], 
     [selectedStaffId, getStaffReviews]
@@ -65,14 +64,13 @@ const StaffReviews: React.FC = () => {
   const staffRatingCounts = useMemo(() => countRatings(staffReviews), [staffReviews]);
   const serviceRatingCounts = useMemo(() => countRatings(serviceReviews), [serviceReviews]);
 
-  // Handler for opening response modal
+
   const openResponseModal = (reviewId: string) => {
     setCurrentReviewId(reviewId);
     setResponseText('');
     setResponseModalVisible(true);
   };
   
-  // Handler for submitting staff response
   const submitResponse = () => {
     if (responseText.trim()) {
       addStaffResponse(currentReviewId, responseText);
