@@ -274,4 +274,5 @@ const BookAppointment: React.FC = () => {
   );
 };
 
+
 export default BookAppointment;
