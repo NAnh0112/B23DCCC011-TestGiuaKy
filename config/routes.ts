@@ -45,7 +45,7 @@
 	{
 		path: '/game', // Đường dẫn trên URL
 		name: 'Game', // Tên hiển thị trên thanh menu
-		component: './Game', // base-web-umi/pages/Game/index.tsx	 
+		component: './Game', // base-web-umi/pages/Game/index.tsx
 		icon: 'SmileOutlined', // Icon
 	},
 
@@ -57,24 +57,24 @@
 			{
 				path: '/manage-question/knowledge',
 				name: 'Quản lý khối kiến thức',
-				component: '@/pages/Question Management/Knowledge'
+				component: '@/pages/Question Management/Knowledge',
 			},
 			{
 				path: '/manage-question/subjects',
 				name: 'Quản lý môn học',
-				component: '@/pages/Question Management/Subject'
+				component: '@/pages/Question Management/Subject',
 			},
 			{
 				path: '/manage-question/questions',
 				name: 'Quản lý câu hỏi',
-				component: '@/pages/Question Management/Question'
+				component: '@/pages/Question Management/Question',
 			},
 			{
 				path: '/manage-question/exams',
 				name: 'Quản lý đề thi',
-				component: '@/pages/Question Management/Exam'
-			}
-		]
+				component: '@/pages/Question Management/Exam',
+			},
+		],
 	},
 	{
 		path: '/datlich',
@@ -109,29 +109,67 @@
 				path: '/datlich/manage',
 				name: 'Quản lý lịch hẹn',
 				component: './DatLich/ManageAppointments',
-				},
-				// Add new routes for review features
-				{
-					path: '/datlich/reviews',
-					component: './DatLich/CustomerReviews',
-					name: 'Đánh giá dịch vụ',
-				},
-				{
-					path: '/datlich/staff-reviews',
-					component: './DatLich/StaffReviews',
-					name: 'Thống kê đánh giá',
-				},
-				{
-					path: '/datlich/reports',
-					component: './DatLich/Reporting',
-					name: 'Thống kê & Báo cáo',
-				},
+			},
+			// Add new routes for review features
+			{
+				path: '/datlich/reviews',
+				component: './DatLich/CustomerReviews',
+				name: 'Đánh giá dịch vụ',
+			},
+			{
+				path: '/datlich/staff-reviews',
+				component: './DatLich/StaffReviews',
+				name: 'Thống kê đánh giá',
+			},
+			{
+				path: '/datlich/reports',
+				component: './DatLich/Reporting',
+				name: 'Thống kê & Báo cáo',
+			},
 		],
 	},
 	{
-		path:'/rockpaperscissors',
+		path: '/diploma',
+		name: 'Quản lý văn bằng',
+		icon: 'FileProtectOutlined',
+		routes: [
+			{
+				path: '/diploma/diploma-books',
+				name: 'Quản lý sổ văn bằng',
+				component: '@/pages/DiplomaManagement/DiplomaBook/index',
+			},
+			{
+				path: '/diploma/graduation-decisions',
+				name: 'Quyết định tốt nghiệp',
+				component: '@/pages/DiplomaManagement/GraduationDecision/index',
+			},
+			{
+				path: '/diploma/field-config',
+				name: 'Cấu hình biểu mẫu',
+				component: '@/pages/DiplomaManagement/DiplomaFieldConfig/index',
+			},
+			{
+				path: '/diploma/diploma-records',
+				name: 'Thông tin văn bằng',
+				component: '@/pages/DiplomaManagement/DiplomaRecord/index',
+			},
+			{
+				path: '/diploma/diploma-lookup',
+				name: 'Tra cứu văn bằng',
+				component: '@/pages/DiplomaManagement/DiplomaLookup/index',
+			},
+			{
+				path: '/diploma/lookup-statistics',
+				name: 'Thống kê tra cứu',
+				component: '@/pages/DiplomaManagement/LookupStatistics/index',
+			},
+			
+		],
+	},
+	{
+		path: '/rockpaperscissors',
 		name: 'RockPaperScissors',
-        component: './RockPaperScissors/RockPaperScissors',
+		component: './RockPaperScissors/RockPaperScissors',
 		icon: 'CheckSquareOutlined',
 	},
 	// DANH MUC HE THONG
@@ -170,7 +208,7 @@
 		layout: false,
 		hideInMenu: true,
 	},
-	
+
 	{
 		path: '/',
 	},
@@ -186,5 +224,18 @@
 	},
 	{
 		component: './exception/404',
+	},
+
+	// Thêm route công khai cho trang tra cứu
+	{
+		path: '/public',
+		layout: false,
+		routes: [
+			{
+				path: '/public/diploma-lookup',
+				name: 'Tra cứu văn bằng',
+				component: '@/pages/DiplomaManagement/DiplomaLookup/index',
+			},
+		],
 	},
 ];
