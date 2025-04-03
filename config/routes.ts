@@ -48,6 +48,28 @@
 		component: './Game', // base-web-umi/pages/Game/index.tsx
 		icon: 'SmileOutlined', // Icon
 	},
+	{
+		path: '/ordersPage', 
+		name: 'OrdersPage', 
+		icon: 'FileTextOutlined', 
+		routes: [
+			{
+				path: '/ordersPage',
+				name: 'Quản lý đơn hàng',
+				component: './GiuaKy/OrdersPage',
+			},
+			{
+				path: '/customers',
+				name: 'Quản lý khách hàng',
+				component: './GiuaKy/Customers',
+			},
+			{
+				path: '/products',
+				name: 'Quản lý sản phẩm',
+				component: './GiuaKy/Products',
+			},
+		]
+	},
 
 	{
 		path: '/manage-question',
