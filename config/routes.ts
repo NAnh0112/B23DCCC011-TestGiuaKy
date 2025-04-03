@@ -59,12 +59,12 @@
 				component: './GiuaKy/OrdersPage',
 			},
 			{
-				path: '/customers',
+				path: '/ordersPage/customers',
 				name: 'Quản lý khách hàng',
 				component: './GiuaKy/Customers',
 			},
 			{
-				path: '/products',
+				path: '/ordersPage/products',
 				name: 'Quản lý sản phẩm',
 				component: './GiuaKy/Products',
 			},
