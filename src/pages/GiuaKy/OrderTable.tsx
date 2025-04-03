@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Input, Select, Button, message } from 'antd';
+import { Table, Input, Select, Button, message, Modal } from 'antd';
 import { useOrders } from '../../services/GiuaKy/orderService';
 import { Order, OrderStatus } from '../../models/GiuaKy/order';
 
@@ -7,7 +7,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 interface OrderTableProps {
-  onEdit: (order: Order) => void; // ✅ Thêm prop onEdit để nhận từ OrdersPage.tsx
+  onEdit: (order: Order) => void;
 }
 
 const OrderTable: React.FC<OrderTableProps> = ({ onEdit }) => {
@@ -17,12 +17,29 @@ const OrderTable: React.FC<OrderTableProps> = ({ onEdit }) => {
 
   const handleDelete = (id: string) => {
     const order = orders.find(o => o.id === id);
-    if (order?.status !== OrderStatus.Pending) {
-      message.error('Chỉ có thể hủy đơn ở trạng thái "Chờ xác nhận"');
+    
+    if (!order) {
+      message.error('Không tìm thấy đơn hàng');
       return;
     }
-    setOrders(orders.filter(o => o.id !== id));
-    message.success('Đã hủy đơn hàng');
+
+    // Kiểm tra trạng thái đơn hàng
+    if (order.status !== OrderStatus.Pending) {
+      message.error('Chỉ có thể hủy đơn hàng ở trạng thái "Chờ xác nhận"');
+      return;
+    }
+
+    // Hiển thị Modal cảnh báo trước khi hủy đơn hàng
+    Modal.confirm({
+      title: 'Xác nhận hủy đơn hàng',
+      content: `Bạn có chắc chắn muốn hủy đơn hàng mã ${id}? Hành động này không thể hoàn tác.`,
+      okText: 'Xác nhận',
+      cancelText: 'Hủy',
+      onOk: () => {
+        setOrders(orders.filter(o => o.id !== id));
+        message.success('Đã hủy đơn hàng');
+      }
+    });
   };
 
   const filteredOrders = orders.filter(o =>
@@ -40,7 +57,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ onEdit }) => {
       title: 'Hành động',
       render: (_: unknown, record: Order) => (
         <>
-          <Button onClick={() => onEdit(record)}>Sửa</Button> {/* ✅ Gọi onEdit thay vì setEditingOrder */}
+          <Button onClick={() => onEdit(record)}>Sửa</Button>
           <Button onClick={() => handleDelete(record.id)} danger>Hủy</Button>
         </>
       )
@@ -49,11 +66,13 @@ const OrderTable: React.FC<OrderTableProps> = ({ onEdit }) => {
 
   return (
     <div>
-      <Button onClick={() => onEdit({} as Order)}>Thêm mới</Button> {/* ✅ Dùng onEdit từ prop */}
+      <Button onClick={() => onEdit({} as Order)}>Thêm mới</Button>
       <Search placeholder="Tìm kiếm" onChange={e => setSearchTerm(e.target.value)} />
       <Select defaultValue="" onChange={setStatusFilter}>
         <Option value="">Tất cả</Option>
-        {Object.values(OrderStatus).map(status => <Option key={status} value={status}>{status}</Option>)}
+        {Object.values(OrderStatus).map(status => (
+          <Option key={status} value={status}>{status}</Option>
+        ))}
       </Select>
       <Table dataSource={filteredOrders} columns={columns} rowKey="id" />
     </div>

@@ -10,7 +10,6 @@ const OrdersPage: React.FC = () => {
   return (
     <div>
       <h1>Quản lý đơn hàng</h1>
-      <Button type="primary" onClick={() => setEditingOrder({} as Order)}>Thêm đơn hàng</Button>
       <OrderTable onEdit={setEditingOrder} />
       <Modal visible={!!editingOrder} onCancel={() => setEditingOrder(null)} footer={null}>
   <OrderForm order={editingOrder!} onClose={() => setEditingOrder(null)} />

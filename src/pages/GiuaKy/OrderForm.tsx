@@ -22,18 +22,16 @@ const OrderForm: React.FC<{ order?: Order; onClose: () => void }> = ({ order, on
     setTotal(totalAmount);
   }, [selectedProducts]);
 
-  const handleProductChange = (value: string, quantity: number) => {
-    const updatedProducts = selectedProducts.map(product =>
-      product.productId === value ? { ...product, quantity } : product
-    );
+  const handleProductChange = (productIds: string[]) => {
+    const updatedProducts = productIds.map(productId => {
+      const product = products.find(p => p.id === productId);
+      return product ? { productId: product.id, quantity: 1, price: product.price } : null;
+    }).filter(Boolean) as OrderProduct[];
     setSelectedProducts(updatedProducts);
   };
 
-  const handleAddProduct = (productId: string) => {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-      setSelectedProducts([...selectedProducts, { productId: product.id, quantity: 1, price: product.price }]);
-    }
+  const handleQuantityChange = (value: number, productId: string) => {
+    setSelectedProducts(prev => prev.map(p => p.productId === productId ? { ...p, quantity: value } : p));
   };
 
   const handleSubmit = (values: any) => {
@@ -78,7 +76,7 @@ const OrderForm: React.FC<{ order?: Order; onClose: () => void }> = ({ order, on
   };
 
   return (
-    <Form form={form} onFinish={handleSubmit} initialValues={order}>
+    <Form form={form} onFinish={handleSubmit} initialValues={{ ...order, date: order?.date ? moment(order.date) : moment() }}>
       <Form.Item name="id" label="Mã đơn" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
@@ -89,17 +87,48 @@ const OrderForm: React.FC<{ order?: Order; onClose: () => void }> = ({ order, on
         </Select>
       </Form.Item>
 
-      <Form.Item label="Sản phẩm">
-        <Select placeholder="Chọn sản phẩm" onChange={handleAddProduct}>
-          {products.map(p => <Option key={p.id} value={p.id}>{p.name}</Option>)}
+      <Form.Item name="status" label="Trạng thái đơn hàng" rules={[{ required: true }]}>
+        <Select>
+          {Object.values(OrderStatus).map(s => <Option key={s} value={s}>{s}</Option>)}
         </Select>
+      </Form.Item>
+
+      <Form.Item name="date" label="Ngày đặt hàng" rules={[{ required: true }]}>
+        <DatePicker defaultValue={order ? moment(order.date) : moment()} format="YYYY-MM-DD" />
+      </Form.Item>
+
+      <Form.Item label="Sản phẩm" rules={[{ required: true }]}>
+        <Select mode="multiple" placeholder="Chọn sản phẩm" onChange={handleProductChange} style={{ width: '100%' }}>
+          {products.map(product => (
+            <Option key={product.id} value={product.id}>{product.name}</Option>
+          ))}
+        </Select>
+        {selectedProducts.map((product, index) => (
+          <Row key={index} gutter={16} style={{ marginTop: 10 }}>
+            <Col span={16}>
+              <span>{products.find(p => p.id === product.productId)?.name}</span>
+            </Col>
+            <Col span={4}>
+              <Input
+                type="number"
+                min={1}
+                value={product.quantity}
+                onChange={e => handleQuantityChange(Number(e.target.value), product.productId)}
+                style={{ width: 100 }}
+              />
+            </Col>
+            <Col span={4}>
+              <span>Tổng tiền: {product.quantity * product.price}</span>
+            </Col>
+          </Row>
+        ))}
       </Form.Item>
 
       <Form.Item label="Tổng tiền">
         <Input value={total} disabled />
       </Form.Item>
 
-      <Button type="primary" htmlType="submit">Thêm mới</Button>
+      <Button type="primary" htmlType="submit">{order ? 'Cập nhật' : 'Thêm mới'}</Button>
     </Form>
   );
 };
